@@ -48,3 +48,4 @@ jobs:
         message: |
           Є доступні талончики:
           ${{ steps.resultsfile.outputs.results }}
+          .
