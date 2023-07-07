@@ -85,9 +85,9 @@ test('find a talons', async ({ page }) => {
         if(marker?.cnt && marker?.offices_n === '4641') {
           // if(marker?.cnt && marker?.offices_n === '8049') {
 
-            writeFileSync('results.txt', `ТСЦ #: ${marker?.offices_n}\n     Талончиків: ${marker?.cnt}\n🚗 🚗 🚗 🚗 🚗`)
+            writeFileSync('results.txt', `🚗 🚗 🚗 🚗ТСЦ #: ${marker?.offices_n}  Талончиків: ${marker?.cnt} 🚗 🚗 🚗 🚗`)
           // @ts-ignore
-          console.log(`ТСЦ #: ${marker?.offices_n}\n     Талончиків: ${marker?.cnt}\n🚗 🚗 🚗 🚗 🚗`)
+          console.log(`🚗 🚗ТСЦ #: ${marker?.offices_n} Талончиків: ${marker?.cnt}  🚗 🚗 🚗\n`)
         }
       }
     }
