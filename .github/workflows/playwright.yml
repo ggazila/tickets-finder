@@ -45,4 +45,6 @@ jobs:
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: {{ steps.resultsfile.outputs.results }}
+        message: |
+          Є доступні талончики:
+          ${{ steps.resultsfile.outputs.results }}
