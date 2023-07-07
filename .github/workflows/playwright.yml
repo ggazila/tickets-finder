@@ -13,11 +13,11 @@ jobs:
       with:
         node-version: 18
     - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          version: 8
-          run_install: false
+      name: Install pnpm
+      id: pnpm-install
+      with:
+        version: 8
+        run_install: false
     - name: Install dependencies
       run: pnpm install
     - name: Install Playwright Browsers
