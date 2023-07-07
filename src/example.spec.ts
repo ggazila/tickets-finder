@@ -83,6 +83,7 @@ test('find a talons', async ({ page }) => {
       for (const marker of markers) {
         // @ts-ignore
         if(marker?.cnt && marker?.offices_n === '8049') {
+          writeFileSync('results.txt', `ТСЦ #: ${marker?.offices_n}\n     Талончиків: ${marker?.cnt}\n🚗 🚗 🚗 🚗 🚗`)
           // @ts-ignore
           console.log(`ТСЦ #: ${marker?.offices_n}\n     Талончиків: ${marker?.cnt}\n🚗 🚗 🚗 🚗 🚗`)
         }

@@ -27,3 +27,22 @@ jobs:
         ECP_KEY: ${{ secrets.ECP_KEY }}
         ECP_PASSWORD: ${{ secrets.ECP_PASSWORD }}
       run: pnpm exec playwright test
+
+    - name: Check talonchyk existence
+      id: check_files
+      uses: andstor/file-existence-action@v1
+      with:
+        files: "results.txt"
+
+    - name: Read results file
+      if: steps.check_files.outputs.files_exists == 'true'
+      id: resultsfile
+      run: echo "::set-output name=results::$(cat results.txt)"
+
+    - name: send telegram message if taloncyk exists
+      uses: appleboy/telegram-action@master
+      if: steps.check_files.outputs.files_exists == 'true'
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: {{ steps.resultsfile.outputs.results }}
