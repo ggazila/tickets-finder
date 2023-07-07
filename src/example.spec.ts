@@ -87,8 +87,8 @@ test('find a talons', async ({ page }) => {
     if(markers && markers.length){
       for (const marker of markers) {
         // @ts-ignore
-        // if(marker?.cnt && marker?.offices_n === '4641') {
-        if(marker?.cnt && marker?.offices_n === '8049') {
+        if(marker?.cnt && marker?.offices_n === '4641') {
+        // if(marker?.cnt && marker?.offices_n === '8049') {
           results.push(`🚗ТСЦ #: ${marker?.offices_n}\n  Дата: ${date?.text.toString().toUpperCase()}\n    Талончиків: ${marker?.cnt} 🚗`);
           // @ts-ignore
           console.log(`🚗 🚗ТСЦ #: ${marker?.offices_n} Талончиків: ${marker?.cnt}  🚗 🚗 🚗\n`)
