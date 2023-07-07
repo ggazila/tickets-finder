@@ -17,6 +17,8 @@ const getAuthData = () => {
 }
 
 test('find a talons', async ({ page }) => {
+  test.setTimeout(120000);
+
   await page.goto('https://eq.hsc.gov.ua/');
 
   await page.getByRole('checkbox').check();
@@ -75,6 +77,7 @@ test('find a talons', async ({ page }) => {
   for (const date of dateValues) {
     await page.goto(`https://eq.hsc.gov.ua/site/step2?chdate=${date?.dateValue}&question_id=56&id_es=`);
 
+    await page.waitForTimeout(200);
     // @ts-ignore
     const markers = await page.evaluate(() => window?.markers);
     console.log('\n')
@@ -84,8 +87,8 @@ test('find a talons', async ({ page }) => {
     if(markers && markers.length){
       for (const marker of markers) {
         // @ts-ignore
-        if(marker?.cnt && marker?.offices_n === '4641') {
-          // if(marker?.cnt && marker?.offices_n === '8049') {
+        // if(marker?.cnt && marker?.offices_n === '4641') {
+        if(marker?.cnt && marker?.offices_n === '8049') {
           results.push(`🚗ТСЦ #: ${marker?.offices_n}\n  Дата: ${date?.text.toString().toUpperCase()}\n    Талончиків: ${marker?.cnt} 🚗`);
           // @ts-ignore
           console.log(`🚗 🚗ТСЦ #: ${marker?.offices_n} Талончиків: ${marker?.cnt}  🚗 🚗 🚗\n`)
