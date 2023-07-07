@@ -1,0 +1,22 @@
+name: Find Talonchyk
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+jobs:
+  find:
+    timeout-minutes: 8
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
+    - name: Install dependencies
+      run: pnpm install
+    - name: Install Playwright Browsers
+      run: pnpm exec playwright install --with-deps
+    - name: Run Playwright tests
+      env:
+        ECP_KEY: ${{ secrets.ECP_KEY }}
+        ECP_PASSWORD: ${{ secrets.ECP_PASSWORD }}
+      run: pnpm exec playwright test
