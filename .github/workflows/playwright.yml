@@ -1,5 +1,6 @@
 name: Find Talonchyk
 on:
+  workflow_dispatch:
   schedule:
     - cron: "*/10 * * * *"
 jobs:
