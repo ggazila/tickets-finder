@@ -89,7 +89,7 @@ test('find a talons', async ({ page }) => {
         // @ts-ignore
         if(marker?.cnt && marker?.offices_n === '4641') {
         // if(marker?.cnt && marker?.offices_n === '8049') {
-          results.push(`🚗ТСЦ #: ${marker?.offices_n} Дата: ${date?.text.toString().toUpperCase()} Талончиків: ${marker?.cnt} 🚗`);
+          results.push(`🚗ТСЦ #: ${marker?.offices_n} \nДата: ${date?.text.toString().toUpperCase()} Талончиків: ${marker?.cnt} 🚗\n`);
           // @ts-ignore
           console.log(`🚗 🚗ТСЦ #: ${marker?.offices_n} Талончиків: ${marker?.cnt}  🚗 🚗 🚗\n`)
         }
@@ -98,7 +98,7 @@ test('find a talons', async ({ page }) => {
   }
 
   if(results && results.length > 0) {
-    writeFileSync('results.txt', results.join(' '));
+    writeFileSync('results.txt', results.join('\n'));
   }
 
 
