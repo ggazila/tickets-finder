@@ -27,6 +27,7 @@ jobs:
       env:
         ECP_KEY: ${{ secrets.ECP_KEY }}
         ECP_PASSWORD: ${{ secrets.ECP_PASSWORD }}
+        WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
       run: pnpm exec playwright test
 
     - name: Check talonchyk existence

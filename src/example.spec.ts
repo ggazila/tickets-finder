@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import {writeFileSync} from 'fs'
+import axios from "axios";
 require('dotenv').config();
 
 const getAuthData = () => {
@@ -140,6 +141,15 @@ test('find a talons', async ({ page }) => {
       data: resultsObject.data,
       offices: Array.from(resultsObject.offices, ([_name, value]) => value),
     }));
+
+    await axios({
+      method: 'post',
+      url: `${process.env.WEBHOOK_URL}`,
+      data: {
+        data: resultsObject.data,
+        offices: Array.from(resultsObject.offices, ([_name, value]) => value),
+      }
+    });
   }
 
   console.log('\n')
