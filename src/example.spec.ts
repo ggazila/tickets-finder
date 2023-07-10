@@ -41,8 +41,6 @@ test('find a talons', async ({ page }) => {
 
   await page.getByText('Продовжити').click();
 
-
-
   await page.getByRole('button', { name: 'Записатись' }).click();
 
   await page.goto('https://eq.hsc.gov.ua/site/step_pe');
@@ -73,6 +71,7 @@ test('find a talons', async ({ page }) => {
   console.log('\n💖 💖 💖 💖 💖');
 
   const results = [];
+  const resultsObject = {data: [], offices: new Map()};
 
   for (const date of dateValues) {
     await page.goto(`https://eq.hsc.gov.ua/site/step2?chdate=${date?.dateValue}&question_id=56&id_es=`);
@@ -83,9 +82,41 @@ test('find a talons', async ({ page }) => {
     console.log('\n')
     console.info(date?.text.toString().toUpperCase().replace(/\n/g, ' '));
 
+    const dateObject = {
+      date: date?.dateValue,
+      text: date?.text.toString().replace(/\n/g, ' '),
+      markers: [],
+    };
 
     if(markers && markers.length){
       for (const marker of markers) {
+        const {
+          offices_n,
+          id_region,
+          lang,
+          long,
+          offices_addr,
+          offices_name,
+          id_offices,
+        } = marker;
+
+        resultsObject.offices.set(offices_n, {
+          offices_n,
+          id_region,
+          lang,
+          long,
+          offices_addr,
+          offices_name,
+          id_offices,
+        });
+
+        if(marker?.cnt) {
+          dateObject.markers.push({
+            offices_n,
+            talons: marker?.cnt,
+          })
+        }
+
         // @ts-ignore
         // if(marker?.cnt && marker?.offices_n === '4641') {
         if(marker?.cnt && marker?.offices_n === '8049') {
@@ -95,6 +126,8 @@ test('find a talons', async ({ page }) => {
           console.log(`🚗 🚗ТСЦ #: ${marker?.offices_n} Талончиків: ${marker?.cnt}  🚗 🚗 🚗\n`)
         }
       }
+
+      resultsObject.data.push(dateObject);
     }
   }
 
@@ -102,6 +135,12 @@ test('find a talons', async ({ page }) => {
     writeFileSync('results.txt', results.join(' '));
   }
 
+  if(resultsObject) {
+    writeFileSync('results.json', JSON.stringify({
+      data: resultsObject.data,
+      offices: Array.from(resultsObject.offices, ([_name, value]) => value),
+    }));
+  }
 
   console.log('\n')
 
