@@ -142,7 +142,7 @@ test('find a talons', async ({ page }) => {
       offices: Array.from(resultsObject.offices, ([_name, value]) => value),
     }));
 
-    await axios({
+    const response = await axios({
       method: 'post',
       url: `${process.env.WEBHOOK_URL}`,
       data: {
@@ -150,6 +150,8 @@ test('find a talons', async ({ page }) => {
         offices: Array.from(resultsObject.offices, ([_name, value]) => value),
       }
     });
+
+    console.log(response.data)
   }
 
   console.log('\n')
