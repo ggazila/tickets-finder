@@ -17,6 +17,11 @@ const getAuthData = () => {
   }
 }
 
+
+// 55 - талончик на здачу практики на машині сервісного центру
+// 56 - талончик на здачу практики на машині автошколи
+const questionId = 55;
+
 test('find a talons', async ({ page }) => {
   test.setTimeout(120000);
 
@@ -52,7 +57,7 @@ test('find a talons', async ({ page }) => {
 
   await page.getByRole('button', { name: 'Так. Я успішно склав теоретичний іспит в сервісному центрі МВС.' }).click()
 
-  await page.goto('https://eq.hsc.gov.ua/site/step1?value=56');
+  await page.goto(`https://eq.hsc.gov.ua/site/step1?value=${questionId}`);
 
   const dates = await page.locator('[href="/site/step2"]').all();
 
@@ -75,7 +80,7 @@ test('find a talons', async ({ page }) => {
   const resultsObject = {data: [], offices: new Map()};
 
   for (const date of dateValues) {
-    await page.goto(`https://eq.hsc.gov.ua/site/step2?chdate=${date?.dateValue}&question_id=56&id_es=`);
+    await page.goto(`https://eq.hsc.gov.ua/site/step2?chdate=${date?.dateValue}&question_id=${questionId}&id_es=`);
 
     await page.waitForTimeout(200);
     // @ts-ignore
