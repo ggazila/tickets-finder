@@ -2,8 +2,8 @@ name: Find Talonchyk
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/20 11-16 * * *"
-    - cron: "*/10 4-11 * * *"
+    - cron: "*/21 11-16 * * *"
+    - cron: "*/9 4-11 * * *"
 jobs:
   find:
     timeout-minutes: 8
