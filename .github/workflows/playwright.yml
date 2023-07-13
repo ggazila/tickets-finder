@@ -6,7 +6,7 @@ on:
     - cron: "*/9 4-11 * * *"
 jobs:
   find:
-    timeout-minutes: 8
+    timeout-minutes: 4
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -28,26 +28,6 @@ jobs:
         ECP_KEY: ${{ secrets.ECP_KEY }}
         ECP_PASSWORD: ${{ secrets.ECP_PASSWORD }}
         WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
       run: pnpm exec playwright test
-
-    - name: Check talonchyk existence
-      id: check_files
-      uses: andstor/file-existence-action@v1
-      with:
-        files: "results.txt"
-
-    - name: Read results file
-      if: steps.check_files.outputs.files_exists == 'true'
-      id: resultsfile
-      run: echo "::set-output name=results::$(cat results.txt)"
-
-    - name: send telegram message if taloncyk exists
-      uses: appleboy/telegram-action@master
-      if: steps.check_files.outputs.files_exists == 'true'
-      with:
-        to: ${{ secrets.TELEGRAM_TO }}
-        token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: |
-          Є доступні талончики:
-          ${{ steps.resultsfile.outputs.results }}
-          .

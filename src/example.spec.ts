@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import {writeFileSync} from 'fs'
 import axios from "axios";
+import {Telegraf} from "telegraf";
 require('dotenv').config();
 
 const getAuthData = () => {
@@ -127,7 +128,7 @@ test('find a talons', async ({ page }) => {
         // if(marker?.cnt && marker?.offices_n === '4641') {
         if(marker?.cnt && marker?.offices_n === '8049') {
           const dateText = date?.text.toString().toUpperCase().replace(/\n/g, '');
-          results.push(`🚗ТСЦ #: ${marker?.offices_n} Дата: ${dateText} Талончиків: ${marker?.cnt} 🚗`);
+          results.push(`🚗ТСЦ #: ${marker?.offices_n}\nДата: ${dateText}\nТалончиків: ${marker?.cnt} 🚗\n`);
           // @ts-ignore
           console.log(`🚗 🚗ТСЦ #: ${marker?.offices_n} Талончиків: ${marker?.cnt}  🚗 🚗 🚗\n`)
         }
@@ -138,7 +139,9 @@ test('find a talons', async ({ page }) => {
   }
 
   if(results && results.length > 0) {
-    writeFileSync('results.txt', results.join(' '));
+    const bot = new Telegraf(process.env.TELEGRAM_TOKEN as string);
+
+    await bot.telegram.sendMessage(process.env.TELEGRAM_TO, results.join('\n'))
   }
 
   if(resultsObject) {
