@@ -6,7 +6,7 @@ on:
     - cron: "*/9 4-11 * * *"
 jobs:
   find:
-    timeout-minutes: 4
+    timeout-minutes: 7
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
