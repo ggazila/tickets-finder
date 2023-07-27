@@ -122,7 +122,6 @@ test('find a talons', async ({ page }) => {
       if(markers && markers.length){
         for (const marker of markers) {
           const {
-            offices_n,
             id_region,
             lang,
             long,
@@ -130,6 +129,8 @@ test('find a talons', async ({ page }) => {
             offices_name,
             id_offices,
           } = marker;
+            
+          const offices_n = offices_name.match(/\d{4}/)?.[0];
   
           resultsObject.offices.set(offices_n, {
             offices_n,
@@ -150,12 +151,12 @@ test('find a talons', async ({ page }) => {
             });
           }
   
-          if(marker?.cnt && marker?.offices_n === '8049') {
+          if(marker?.cnt && offices_n === '8049') {
             const issueName = Object.keys(IssueType)[Object.values(IssueType).indexOf(issueType)];
             const dateText = date?.text.toString().toUpperCase().replace(/\n/g, '');
-            results.push(`🚗ТСЦ #: ${marker?.offices_n}\nДата: ${dateText}\nТалончиків: ${marker?.cnt} 🚗\nПитання: ${issueName}`);
+            results.push(`🚗ТСЦ #: ${offices_n}\nДата: ${dateText}\nТалончиків: ${marker?.cnt} 🚗\nПитання: ${issueName}`);
             // @ts-ignore
-            console.log(`🚗 🚗ТСЦ #: ${marker?.offices_n} Талончиків: ${marker?.cnt} Питання: ${issueName}  🚗 🚗 🚗\n`)
+            console.log(`🚗 🚗ТСЦ #: ${offices_n} Талончиків: ${marker?.cnt} Питання: ${issueName}  🚗 🚗 🚗\n`)
           }
         }
   
