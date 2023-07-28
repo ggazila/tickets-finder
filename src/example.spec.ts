@@ -41,7 +41,6 @@ type DateObject = {
 }
 
 type OfficesMap = {
-  sts: number;
   lang: string;
   long: string;
   offices_addr: string;
@@ -132,7 +131,6 @@ test('find a talons', async ({ page }) => {
   
           resultsObject.offices.set(offices_n, {
             offices_n,
-            sts,
             lang,
             long,
             offices_addr,
@@ -148,7 +146,7 @@ test('find a talons', async ({ page }) => {
             });
           }
   
-          if(marker?.sts && offices_n === '8049') {
+          if(marker?.sts === 3 && offices_n === '8049') {
             const issueName = Object.keys(IssueType)[Object.values(IssueType).indexOf(issueType)];
             const dateText = date?.text.toString().toUpperCase().replace(/\n/g, '');
             results.push(`🚗ТСЦ #: ${offices_n}\nДата: ${dateText}\nТалончиків: ${marker?.cnt || 'X'} 🚗\nПитання: ${issueName}`);
