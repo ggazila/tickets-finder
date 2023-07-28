@@ -41,13 +41,12 @@ type DateObject = {
 }
 
 type OfficesMap = {
-  offices_n: string;
-  id_region: number;
+  sts: number;
   lang: string;
   long: string;
   offices_addr: string;
   offices_name: string;
-  id_offices: string;
+  offices_n: string;
 }
 
 
@@ -122,41 +121,39 @@ test('find a talons', async ({ page }) => {
       if(markers && markers.length){
         for (const marker of markers) {
           const {
-            id_region,
             lang,
             long,
             offices_addr,
             offices_name,
-            id_offices,
+            sts,
           } = marker;
             
           const offices_n = offices_name.match(/\d{4}/)?.[0];
   
           resultsObject.offices.set(offices_n, {
             offices_n,
-            id_region,
+            sts,
             lang,
             long,
             offices_addr,
             offices_name,
-            id_offices,
           });
   
-          if(marker?.cnt) {
+          if(marker?.sts === 3) {
             const issueName = Object.keys(IssueType)[Object.values(IssueType).indexOf(issueType)];
             dateObject.markers.push({
               offices_n,
-              talons: marker?.cnt,
+              talons: marker?.cnt || true,
               issueType: issueName,
             });
           }
   
-          if(marker?.cnt && offices_n === '8049') {
+          if(marker?.sts && offices_n === '8049') {
             const issueName = Object.keys(IssueType)[Object.values(IssueType).indexOf(issueType)];
             const dateText = date?.text.toString().toUpperCase().replace(/\n/g, '');
-            results.push(`🚗ТСЦ #: ${offices_n}\nДата: ${dateText}\nТалончиків: ${marker?.cnt} 🚗\nПитання: ${issueName}`);
+            results.push(`🚗ТСЦ #: ${offices_n}\nДата: ${dateText}\nТалончиків: ${marker?.cnt || 'X'} 🚗\nПитання: ${issueName}`);
             // @ts-ignore
-            console.log(`🚗 🚗ТСЦ #: ${offices_n} Талончиків: ${marker?.cnt} Питання: ${issueName}  🚗 🚗 🚗\n`)
+            console.log(`🚗 🚗ТСЦ #: ${offices_n} Талончиків: ${marker?.cnt || 'X'} Питання: ${issueName}  🚗 🚗 🚗\n`)
           }
         }
   
