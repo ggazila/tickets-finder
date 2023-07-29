@@ -137,7 +137,7 @@ test('find a talons', async ({ page }) => {
             offices_name,
           });
   
-          if(marker?.sts === 3) {
+          if(marker && marker?.sts && marker?.sts === 3) {
             const issueName = Object.keys(IssueType)[Object.values(IssueType).indexOf(issueType)];
             dateObject.markers.push({
               offices_n,
