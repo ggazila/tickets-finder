@@ -24,9 +24,9 @@ const getAuthData = () => {
 // TODO: parse different issueTypes - practive 1+1 and theory
 
 enum IssueType  {
-  // 'practice_on_school_car' = '56',
+  'practice_on_school_car' = '56',
   // 'practice_on_service_center_car' = '55',
-  'theory_exam' = '52',
+  // 'theory_exam' = '52',
 }
 type Marker = {
   offices_n: string;
