@@ -24,8 +24,8 @@ const getAuthData = () => {
 // TODO: parse different issueTypes - practive 1+1 and theory
 
 enum IssueType  {
-  'practice_on_school_car' = '56',
-  'practice_on_service_center_car' = '55',
+  // 'practice_on_school_car' = '56',
+  // 'practice_on_service_center_car' = '55',
   'theory_exam' = '52',
 }
 type Marker = {
@@ -172,7 +172,7 @@ test('find a talons', async ({ page }) => {
   if(results && results.length > 0) {
     const bot = new Telegraf(process.env.TELEGRAM_TOKEN as string);
 
-    await bot.telegram.sendMessage(process.env.TELEGRAM_TO as string, results.join('\n'))
+    await bot.telegram.sendMessage(process.env.TELEGRAM_TO as string, results.join(''))
   }
 
   if(resultsObject) {
@@ -181,16 +181,16 @@ test('find a talons', async ({ page }) => {
       offices: Array.from(resultsObject.offices, ([_name, value]) => value),
     }));
 
-    const response = await axios({
-      method: 'post',
-      url: `${process.env.WEBHOOK_URL}`,
-      data: {
-        data: resultsObject.data,
-        offices: Array.from(resultsObject.offices, ([_name, value]) => value),
-      }
-    });
+    // const response = await axios({
+    //   method: 'post',
+    //   url: `${process.env.WEBHOOK_URL}`,
+    //   data: {
+    //     data: resultsObject.data,
+    //     offices: Array.from(resultsObject.offices, ([_name, value]) => value),
+    //   }
+    // });
 
-    console.log(response.data)
+    // console.log(response.data)
   }
 
   console.log('\n')
