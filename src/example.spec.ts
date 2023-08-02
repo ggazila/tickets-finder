@@ -149,16 +149,20 @@ test('find a talons', async ({ page }) => {
           if((marker?.sts === 3 || marker?.sts === 1) && offices_n === '8049') {
             const issueName = Object.keys(IssueType)[Object.values(IssueType).indexOf(issueType)];
             const dateText = date?.text.toString().toUpperCase().replace(/\n/g, '');
-            results.push(`🚗ТСЦ #: ${offices_n}\nДата: ${dateText}\nТалончиків: ${marker?.cnt || 'X'} 🚗\nПитання: ${issueName}`);
+            results.push(`\n🚗ТСЦ #: ${offices_n}\nДата: ${dateText}\nТалончиків: ${marker?.cnt || 'X'} 🚗\nПитання: ${issueName}`);
             // @ts-ignore
           
             console.log(`🚗 🚗ТСЦ #: ${offices_n} Талончиків: ${marker?.cnt || 'X'} Питання: ${issueName}  🚗 🚗 🚗\n`)
           }
         }
 
-        results.push(`\n\nДля дати:${date?.text.toString().toUpperCase().replace(/\n/g, '')} к-ть талончиків:${dateObject.markers.length}\n`)
+        results.push(`\nДля дати:${date?.text.toString().toUpperCase().replace(/\n/g, '')} к-ть талончиків:${dateObject.markers.length}\n`)
   
-        resultsObject.data.push(dateObject);
+        // check false-positives days
+        if(dateObject.markers.length < 60) {
+          resultsObject.data.push(dateObject);
+        }
+        
       }
     }
   }
@@ -184,16 +188,16 @@ test('find a talons', async ({ page }) => {
       offices: Array.from(resultsObject.offices, ([_name, value]) => value),
     }));
 
-    // const response = await axios({
-    //   method: 'post',
-    //   url: `${process.env.WEBHOOK_URL}`,
-    //   data: {
-    //     data: resultsObject.data,
-    //     offices: Array.from(resultsObject.offices, ([_name, value]) => value),
-    //   }
-    // });
+    const response = await axios({
+      method: 'post',
+      url: `${process.env.WEBHOOK_URL}`,
+      data: {
+        data: resultsObject.data,
+        offices: Array.from(resultsObject.offices, ([_name, value]) => value),
+      }
+    });
 
-    // console.log(response.data)
+    console.log(response.data)
   }
 
   console.log('\n')
