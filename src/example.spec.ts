@@ -156,7 +156,7 @@ test('find a talons', async ({ page }) => {
           }
         }
 
-        results.push(`Для дати:${date?.text.toString().toUpperCase().replace(/\n/g, '')} к-ть талончиків:${dateObject.markers.length}`)
+        results.push(`\n\nДля дати:${date?.text.toString().toUpperCase().replace(/\n/g, '')} к-ть талончиків:${dateObject.markers.length}\n`)
   
         resultsObject.data.push(dateObject);
       }
