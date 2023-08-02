@@ -137,7 +137,7 @@ test('find a talons', async ({ page }) => {
             offices_name,
           });
   
-          if(marker && marker?.sts && marker?.sts === 3) {
+          if(marker && marker?.sts && (marker?.sts === 3 || marker?.sts === 1)) {
             const issueName = Object.keys(IssueType)[Object.values(IssueType).indexOf(issueType)];
             dateObject.markers.push({
               offices_n,
@@ -146,14 +146,17 @@ test('find a talons', async ({ page }) => {
             });
           }
   
-          if(marker?.sts === 3 && offices_n === '8049') {
+          if((marker?.sts === 3 || marker?.sts === 1) && offices_n === '8049') {
             const issueName = Object.keys(IssueType)[Object.values(IssueType).indexOf(issueType)];
             const dateText = date?.text.toString().toUpperCase().replace(/\n/g, '');
             results.push(`🚗ТСЦ #: ${offices_n}\nДата: ${dateText}\nТалончиків: ${marker?.cnt || 'X'} 🚗\nПитання: ${issueName}`);
             // @ts-ignore
+          
             console.log(`🚗 🚗ТСЦ #: ${offices_n} Талончиків: ${marker?.cnt || 'X'} Питання: ${issueName}  🚗 🚗 🚗\n`)
           }
         }
+
+        results.push(`Для дати:${date?.text.toString().toUpperCase().replace(/\n/g, '')} к-ть талончиків:${dateObject.markers.length}`)
   
         resultsObject.data.push(dateObject);
       }
