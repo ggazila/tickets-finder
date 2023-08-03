@@ -169,6 +169,8 @@ test('find a talons', async ({ page }) => {
 
   console.log('\n💖 💖 💖 💖 💖');
 
+  console.log({resultsObject});
+
   const issues = Object.keys(IssueType); // practice_on_school_car, ...
   
   for (const issue of issues) {
