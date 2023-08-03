@@ -169,8 +169,6 @@ test('find a talons', async ({ page }) => {
 
   console.log('\n💖 💖 💖 💖 💖');
 
-  console.log({resultsObject});
-
   const issues = Object.keys(IssueType); // practice_on_school_car, ...
   
   for (const issue of issues) {
@@ -178,6 +176,8 @@ test('find a talons', async ({ page }) => {
   }
   
 
+    console.log({resultsObject});
+    
   if(results && results.length > 0) {
     const bot = new Telegraf(process.env.TELEGRAM_TOKEN as string);
 
