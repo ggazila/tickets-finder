@@ -160,7 +160,7 @@ test('find a talons', async ({ page }) => {
       }
 
       // check false-positives days
-      if(dateObject.markers.length < 60 && issueName === 'practice_on_school_car') {
+      if(dateObject.markers.length < 60) {
         resultsObject.data.push(dateObject);
       }
     }
