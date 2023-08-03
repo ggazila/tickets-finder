@@ -158,11 +158,11 @@ test('find a talons', async ({ page }) => {
 
         results.push(`\nДля дати:${date?.text.toString().toUpperCase().replace(/\n/g, '')} к-ть талончиків:${dateObject.markers.length}\n`)
   
-        // check false-positives days
-        if(dateObject.markers.length < 60) {
-          resultsObject.data.push(dateObject);
-        }
-        
+      }
+
+      // check false-positives days
+      if(dateObject.markers.length < 60) {
+        resultsObject.data.push(dateObject);
       }
     }
   }
