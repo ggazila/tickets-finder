@@ -25,7 +25,7 @@ const getAuthData = () => {
 
 enum IssueType  {
   'practice_on_school_car' = '56',
-  // 'practice_on_service_center_car' = '55',
+  'practice_on_service_center_car' = '55',
   // 'theory_exam' = '52',
 }
 type Marker = {
@@ -98,9 +98,10 @@ test('find a talons', async ({ page }) => {
     expect(dates).toBeDefined();
     expect(dateValues).toBeDefined();
 
+    const issueName = Object.keys(IssueType)[Object.values(IssueType).indexOf(issueType)];
+
     for (const date of dateValues) {
       await page.goto(`https://eq.hsc.gov.ua/site/step2?chdate=${date?.dateValue}&question_id=${issueType}&id_es=`);
-  
       await page.waitForTimeout(200);
       // @ts-ignore
       const markers = await page.evaluate(() => window?.markers);
@@ -138,7 +139,6 @@ test('find a talons', async ({ page }) => {
           });
   
           if(marker && marker?.sts && (marker?.sts === 3 || marker?.sts === 1)) {
-            const issueName = Object.keys(IssueType)[Object.values(IssueType).indexOf(issueType)];
             dateObject.markers.push({
               offices_n,
               talons: marker?.cnt || true,
@@ -147,7 +147,6 @@ test('find a talons', async ({ page }) => {
           }
   
           if((marker?.sts === 3 || marker?.sts === 1) && offices_n === '8049') {
-            const issueName = Object.keys(IssueType)[Object.values(IssueType).indexOf(issueType)];
             const dateText = date?.text.toString().toUpperCase().replace(/\n/g, '');
             results.push(`\n🚗ТСЦ #: ${offices_n}\nДата: ${dateText}\nТалончиків: ${marker?.cnt || 'X'} 🚗\nПитання: ${issueName}`);
             // @ts-ignore
@@ -156,12 +155,12 @@ test('find a talons', async ({ page }) => {
           }
         }
 
-        results.push(`\nДля дати:${date?.text.toString().toUpperCase().replace(/\n/g, '')} к-ть талончиків:${dateObject.markers.length}\n`)
+        results.push(`\nД:${date?.text.toString().toUpperCase().replace(/\n/g, '')} П:${issueName} К-ть:${dateObject.markers.length}\n`)
   
       }
 
       // check false-positives days
-      if(dateObject.markers.length < 60) {
+      if(dateObject.markers.length < 60 && issueName === 'practice_on_school_car') {
         resultsObject.data.push(dateObject);
       }
     }
