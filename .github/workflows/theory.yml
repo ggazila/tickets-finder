@@ -1,4 +1,4 @@
-name: Find Talonchyk
+name: Find Theory Talonchyk
 on:
   workflow_dispatch:
   schedule:
