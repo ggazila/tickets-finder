@@ -26,7 +26,7 @@ const getAuthData = () => {
 enum IssueType  {
   'practice_on_school_car' = '56',
   'practice_on_service_center_car' = '55',
-  // 'theory_exam' = '52',
+  'theory_exam' = '52',
 }
 type Marker = {
   offices_n: string;
@@ -83,6 +83,13 @@ test('find a talons', async ({ page }) => {
     } = {data: [], offices: new Map<string, OfficesMap> ()};
 
   const getTalonsByIssueId = async (issueType: IssueType) => {
+    const issueName = Object.keys(IssueType)[Object.values(IssueType).indexOf(issueType)];
+    const issuesToParse = JSON.parse(process.env.ISSUES || "[]");
+    
+    if(!issuesToParse || !issuesToParse.includes(issueName)) {
+      return;
+    }
+
     await page.goto(`https://eq.hsc.gov.ua/site/step1?value=${issueType}`);
     const dates = await page.locator('[href="/site/step2"]').all();
     const dateValues = await Promise.all(dates.map(async date => {
@@ -97,8 +104,6 @@ test('find a talons', async ({ page }) => {
 
     expect(dates).toBeDefined();
     expect(dateValues).toBeDefined();
-
-    const issueName = Object.keys(IssueType)[Object.values(IssueType).indexOf(issueType)];
 
     for (const date of dateValues) {
       await page.goto(`https://eq.hsc.gov.ua/site/step2?chdate=${date?.dateValue}&question_id=${issueType}&id_es=`);
@@ -159,8 +164,13 @@ test('find a talons', async ({ page }) => {
   
       }
 
-      // check false-positives days
+      // check false-positives days for practice
       if(dateObject.markers.length < 60 && issueName !== 'theory_exam') {
+        resultsObject.data.push(dateObject);
+      }
+
+      // check false-positives days for theory
+      if(dateObject.markers.length < 95 && issueName === 'theory_exam') {
         resultsObject.data.push(dateObject);
       }
     }

@@ -2,9 +2,7 @@ name: Find Talonchyk
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/23 16-18 * * *"
-    - cron: "*/19 11-16 * * *"
-    - cron: "*/11 4-11 * * *"
+    - cron: "0 4-18 * * *"
 jobs:
   find:
     timeout-minutes: 7
@@ -31,5 +29,5 @@ jobs:
         WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
         TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
         TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-        ISSUES: "["practice_on_school_car","practice_on_service_center_car"]"
+        ISSUES: "["theory_exam"]"
       run: pnpm exec playwright test
