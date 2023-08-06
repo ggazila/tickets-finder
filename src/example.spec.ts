@@ -50,6 +50,8 @@ type OfficesMap = {
 
 
 test('find a talons', async ({ page }) => {
+  const issuesToParse = JSON.parse(process.env.ISSUES || "[]");
+
   test.setTimeout(120000);
 
   await page.goto('https://eq.hsc.gov.ua/');
@@ -84,7 +86,6 @@ test('find a talons', async ({ page }) => {
 
   const getTalonsByIssueId = async (issueType: IssueType) => {
     const issueName = Object.keys(IssueType)[Object.values(IssueType).indexOf(issueType)];
-    const issuesToParse = JSON.parse(process.env.ISSUES || "[]");
     
     if(!issuesToParse || !issuesToParse.includes(issueName)) {
       return;
@@ -205,6 +206,7 @@ test('find a talons', async ({ page }) => {
       data: {
         data: resultsObject.data,
         offices: Array.from(resultsObject.offices, ([_name, value]) => value),
+        issues: issuesToParse,
       }
     });
 
