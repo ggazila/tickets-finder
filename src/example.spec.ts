@@ -87,7 +87,7 @@ test('find a talons', async ({ page }) => {
   const getTalonsByIssueId = async (issueType: IssueType) => {
     const issueName = Object.keys(IssueType)[Object.values(IssueType).indexOf(issueType)];
     
-    if(!issuesToParse || !issuesToParse.includes(issueName)) {
+    if(!issuesToParse.includes(issueName)) {
       return;
     }
 
