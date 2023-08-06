@@ -195,11 +195,6 @@ test('find a talons', async ({ page }) => {
   }
 
   if(resultsObject) {
-    writeFileSync('results.json', JSON.stringify({
-      data: resultsObject.data,
-      offices: Array.from(resultsObject.offices, ([_name, value]) => value),
-    }));
-
     const response = await axios({
       method: 'post',
       url: `${process.env.WEBHOOK_URL}`,
