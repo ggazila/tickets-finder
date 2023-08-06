@@ -31,5 +31,5 @@ jobs:
         WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
         TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
         TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-        ISSUES: ["practice_on_school_car","practice_on_service_center_car"]
+        ISSUES: '["practice_on_school_car","practice_on_service_center_car"]'
       run: pnpm exec playwright test

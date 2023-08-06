@@ -29,5 +29,5 @@ jobs:
         WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
         TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
         TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-        ISSUES: ["theory_exam"]
+        ISSUES: '["theory_exam"]'
       run: pnpm exec playwright test
