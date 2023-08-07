@@ -107,8 +107,15 @@ test('find a talons', async ({ page }) => {
     expect(dateValues).toBeDefined();
 
     for (const date of dateValues) {
+      const dateText = date?.text.toString().toUpperCase().replace(/\n/g, '');
+
+      if(dateText.includes('ПОНЕДІЛОК') || dateText.includes('НЕДІЛЯ')) {
+        return ;
+      }
+
       await page.goto(`https://eq.hsc.gov.ua/site/step2?chdate=${date?.dateValue}&question_id=${issueType}&id_es=`);
-      await page.waitForTimeout(200);
+      
+      // await page.waitForTimeout(200);
       // @ts-ignore
       const markers = await page.evaluate(() => window?.markers);
       console.log('\n')
@@ -123,6 +130,9 @@ test('find a talons', async ({ page }) => {
         text: date?.text.toString().replace(/\n/g, ' '),
         markers: [],
       };
+
+      
+
   
       if(markers && markers.length){
         for (const marker of markers) {
@@ -153,7 +163,6 @@ test('find a talons', async ({ page }) => {
           }
   
           if((marker?.sts === 3 || marker?.sts === 1) && offices_n === '8049') {
-            const dateText = date?.text.toString().toUpperCase().replace(/\n/g, '');
             results.push(`\n🚗ТСЦ #: ${offices_n}\nДата: ${dateText}\nТалончиків: ${marker?.cnt || 'X'} 🚗\nПитання: ${issueName}`);
             // @ts-ignore
           
