@@ -109,7 +109,7 @@ test('find a talons', async ({ page }) => {
     for (const date of dateValues) {
       const dateText = date?.text.toString().toUpperCase().replace(/\n/g, '');
 
-      if(dateText.includes('ПОНЕДІЛОК') || dateText.includes('НЕДІЛЯ')) {
+      if(dateText?.includes('ПОНЕДІЛОК') || dateText?.includes('НЕДІЛЯ')) {
         return ;
       }
 
