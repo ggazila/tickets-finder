@@ -18,11 +18,6 @@ const getAuthData = () => {
   }
 }
 
-
-// 55 - талончик на здачу практики на машині сервісного центру
-// 56 - талончик на здачу практики на машині автошколи
-// TODO: parse different issueTypes - practive 1+1 and theory
-
 enum IssueType  {
   'practice_on_school_car' = '56',
   'practice_on_service_center_car' = '55',
@@ -115,6 +110,7 @@ test('find a talons', async ({ page }) => {
 
       await page.goto(`https://eq.hsc.gov.ua/site/step2?chdate=${date?.dateValue}&question_id=${issueType}&id_es=`);
       
+      // TODO: wait not for timeout, but wait for markers in a map
       await page.waitForTimeout(200);
       // @ts-ignore
       const markers = await page.evaluate(() => window?.markers);
