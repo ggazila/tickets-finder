@@ -88,7 +88,7 @@ test('find a talons', async ({ page }) => {
 
     await page.goto(`https://eq.hsc.gov.ua/site/step1?value=${issueType}`);
     const dates = await page.locator('[href="/site/step2"]').all();
-    const dateValues = await Promise.all(dates.map(async date => {
+    const dateValues = (await Promise.all(dates.map(async date => {
       const text = await date.allInnerTexts();
   
       const dateValueJSON = (await date.getAttribute('data-params')) || '{}';
@@ -96,17 +96,17 @@ test('find a talons', async ({ page }) => {
       const dateValue = JSON.parse(dateValueJSON)['chdate'];
   
       return {dateValue, text};
-    }));
+    }))).filter(date => {
+      const dateText = date?.text.toString().toUpperCase().replace(/\n/g, '');
+
+      return !dateText?.includes('ПОНЕДІЛОК') && !dateText?.includes('НЕДІЛЯ');
+    });
 
     expect(dates).toBeDefined();
     expect(dateValues).toBeDefined();
 
     for (const date of dateValues) {
       const dateText = date?.text.toString().toUpperCase().replace(/\n/g, '');
-
-      if(dateText?.includes('ПОНЕДІЛОК') || dateText?.includes('НЕДІЛЯ')) {
-        return ;
-      }
 
       await page.goto(`https://eq.hsc.gov.ua/site/step2?chdate=${date?.dateValue}&question_id=${issueType}&id_es=`);
       
