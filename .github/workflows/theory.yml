@@ -2,7 +2,7 @@ name: Find Theory Talonchyk
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 4-18 * * *"
+    # - cron: "0 4-18 * * *"
 jobs:
   find:
     timeout-minutes: 7
