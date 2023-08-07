@@ -199,19 +199,19 @@ test('find a talons', async ({ page }) => {
     await bot.telegram.sendMessage(process.env.TELEGRAM_TO as string, results.join(''))
   }
 
-  if(resultsObject) {
-    const response = await axios({
-      method: 'post',
-      url: `${process.env.WEBHOOK_URL}`,
-      data: {
-        data: resultsObject.data,
-        offices: Array.from(resultsObject.offices, ([_name, value]) => value),
-        issues: issuesToParse,
-      }
-    });
+  // if(resultsObject) {
+  //   const response = await axios({
+  //     method: 'post',
+  //     url: `${process.env.WEBHOOK_URL}`,
+  //     data: {
+  //       data: resultsObject.data,
+  //       offices: Array.from(resultsObject.offices, ([_name, value]) => value),
+  //       issues: issuesToParse,
+  //     }
+  //   });
 
-    console.log(response.data)
-  }
+  //   console.log(response.data)
+  // }
 
   console.log('\n')
 
