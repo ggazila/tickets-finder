@@ -134,7 +134,6 @@ test('find a talons', async ({ page }) => {
             offices_addr,
             offices_name,
             id_offices,
-            sts,
           } = marker;
             
           const offices_n = offices_name.match(/\d{4}/)?.[0];
@@ -169,7 +168,7 @@ test('find a talons', async ({ page }) => {
           const talons = JSON.parse(response as string)?.rows || [];
 
           
-          if(marker && marker?.sts && talons.length > 0) {
+          if(marker && talons.length > 0) {
             dateObject.markers.push({
               offices_n,
               talons: talons.length || true,
@@ -215,7 +214,7 @@ test('find a talons', async ({ page }) => {
   if(results && results.length > 0) {
     const bot = new Telegraf(process.env.TELEGRAM_TOKEN as string);
 
-    await bot.telegram.sendMessage(process.env.TELEGRAM_TO as string, "test:" + results.join(''))
+    await bot.telegram.sendMessage(process.env.TELEGRAM_TO as string, results.join(''))
   }
 
   // if(resultsObject) {
