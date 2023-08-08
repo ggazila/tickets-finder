@@ -48,8 +48,6 @@ type OfficesMap = {
 test('find a talons', async ({ page }) => {
   const issuesToParse = JSON.parse(process.env.ISSUES || "[]");
 
-  test.setTimeout(120000);
-
   await page.goto('https://eq.hsc.gov.ua/');
 
   await page.getByRole('checkbox').check();
@@ -192,15 +190,15 @@ test('find a talons', async ({ page }) => {
   
       }
 
-      // // check false-positives days for practice
-      // if(dateObject.markers.length < 60 && issueName !== 'theory_exam') {
-      //   resultsObject.data.push(dateObject);
-      // }
+      // check false-positives days for practice
+      if(dateObject.markers.length < 60 && issueName !== 'theory_exam') {
+        resultsObject.data.push(dateObject);
+      }
 
-      // // check false-positives days for theory
-      // if(dateObject.markers.length < 95 && issueName === 'theory_exam') {
-      //   resultsObject.data.push(dateObject);
-      // }
+      // check false-positives days for theory
+      if(dateObject.markers.length < 95 && issueName === 'theory_exam') {
+        resultsObject.data.push(dateObject);
+      }
     }
   }
 
