@@ -4,6 +4,7 @@ import axios from "axios";
 import {Telegraf} from "telegraf";
 require('dotenv').config();
 
+//TODO: use deep for theory
 const getAuthData = () => {
   const code = process.env.ECP_KEY;
   const password = process.env.ECP_PASSWORD;
