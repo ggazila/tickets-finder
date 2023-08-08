@@ -112,7 +112,7 @@ test('find a talons', async ({ page }) => {
       await page.goto(`https://eq.hsc.gov.ua/site/step2?chdate=${date?.dateValue}&question_id=${issueType}&id_es=`);
       
       // TODO: wait not for timeout, but wait for markers in a map
-      // await page.waitForTimeout(200);
+      await page.waitForTimeout(200);
 
       const markers = await page.evaluate('window?.markers');
 
@@ -148,7 +148,7 @@ test('find a talons', async ({ page }) => {
           });
 
           const js = `
-          new Promise((res) => $.ajax({
+          new Promise((res, rej) => $.ajax({
             type: 'POST',
             url: '/site/freetimes',
             data: 
@@ -159,10 +159,14 @@ test('find a talons', async ({ page }) => {
               es_date: undefined,
               es_time: undefined,
             },
-          }).done(data => res(data)));
+          })
+          .then(data => res(data))
+          );
           `;
 
           const response = await page.evaluate(js);
+
+          await page.waitForTimeout(100);
 
           // await page.waitForTimeout(100);
           const talons = JSON.parse(response as string)?.rows || [];
