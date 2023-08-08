@@ -110,7 +110,7 @@ test('find a talons', async ({ page }) => {
       await page.goto(`https://eq.hsc.gov.ua/site/step2?chdate=${date?.dateValue}&question_id=${issueType}&id_es=`);
       
       // TODO: wait not for timeout, but wait for markers in a map
-      await page.waitForTimeout(200);
+      await page.waitForTimeout(100);
 
       const markers = await page.evaluate('window?.markers');
 
@@ -164,12 +164,11 @@ test('find a talons', async ({ page }) => {
 
           const response = await page.evaluate(js);
 
-          await page.waitForTimeout(100);
+          await page.waitForTimeout(50);
 
           // await page.waitForTimeout(100);
           const talons = JSON.parse(response as string)?.rows || [];
 
-          
           if(marker && talons.length > 0) {
             dateObject.markers.push({
               offices_n,
@@ -219,19 +218,19 @@ test('find a talons', async ({ page }) => {
     await bot.telegram.sendMessage(process.env.TELEGRAM_TO as string, results.join(''))
   }
 
-  // if(resultsObject) {
-  //   const response = await axios({
-  //     method: 'post',
-  //     url: `${process.env.WEBHOOK_URL}`,
-  //     data: {
-  //       data: resultsObject.data,
-  //       offices: Array.from(resultsObject.offices, ([_name, value]) => value),
-  //       issues: issuesToParse,
-  //     }
-  //   });
+  if(resultsObject) {
+    const response = await axios({
+      method: 'post',
+      url: `${process.env.WEBHOOK_URL}`,
+      data: {
+        data: resultsObject.data,
+        offices: Array.from(resultsObject.offices, ([_name, value]) => value),
+        issues: issuesToParse,
+      }
+    });
 
-  //   console.log(response.data)
-  // }
+    console.log(response.data)
+  }
 
   console.log('\n')
 
