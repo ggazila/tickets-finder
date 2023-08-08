@@ -30,4 +30,4 @@ jobs:
         TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
         TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
         ISSUES: '["theory_exam"]'
-      run: pnpm exec playwright test deep.spec.ts
+      run: pnpm exec playwright test example.spec.ts
