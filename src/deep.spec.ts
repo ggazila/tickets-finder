@@ -145,43 +145,47 @@ test('find a talons', async ({ page }) => {
             offices_name,
           });
 
-          const js = `
-          new Promise((res, rej) => $.ajax({
-            type: 'POST',
-            url: '/site/freetimes',
-            data: 
-            { 
-              office_id: ${id_offices},
-              date_of_admission: "${date?.dateValue}",
-              question_id: ${issueType},
-              es_date: undefined,
-              es_time: undefined,
-            },
-          })
-          .then(data => res(data))
-          );
-          `;
-
-          const response = await page.evaluate(js);
-
-          await page.waitForTimeout(50);
-
-          // await page.waitForTimeout(100);
-          const talons = JSON.parse(response as string)?.rows || [];
-
-          if(marker && talons.length > 0) {
-            dateObject.markers.push({
-              offices_n,
-              talons: talons.length || true,
-              issueType: issueName,
-            });
-          }
+          try {
+            const js = `
+            new Promise((res, rej) => $.ajax({
+              type: 'POST',
+              url: '/site/freetimes',
+              data: 
+              { 
+                office_id: ${id_offices},
+                date_of_admission: "${date?.dateValue}",
+                question_id: ${issueType},
+                es_date: undefined,
+                es_time: undefined,
+              },
+            })
+            .then(data => res(data))
+            );
+            `;
   
-          if(talons.length > 0 && offices_n === '8049') {
-            results.push(`\n🚗ТСЦ #: ${offices_n}\nДата: ${dateText}\nТалончиків: ${marker?.cnt || 'X'} 🚗\nПитання: ${issueName}`);
-            // @ts-ignore
-          
-            console.log(`🚗 🚗ТСЦ #: ${offices_n} Талончиків: ${marker?.cnt || 'X'} Питання: ${issueName}  🚗 🚗 🚗\n`)
+            const response = await page.evaluate(js);
+  
+            await page.waitForTimeout(50);
+  
+            // await page.waitForTimeout(100);
+            const talons = JSON.parse(response as string)?.rows || [];
+  
+            if(marker && talons.length > 0) {
+              dateObject.markers.push({
+                offices_n,
+                talons: talons.length || true,
+                issueType: issueName,
+              });
+            }
+    
+            if(talons.length > 0 && offices_n === '8049') {
+              results.push(`\n🚗ТСЦ #: ${offices_n}\nДата: ${dateText}\nТалончиків: ${marker?.cnt || 'X'} 🚗\nПитання: ${issueName}`);
+              // @ts-ignore
+            
+              console.log(`🚗 🚗ТСЦ #: ${offices_n} Талончиків: ${marker?.cnt || 'X'} Питання: ${issueName}  🚗 🚗 🚗\n`)
+            }
+          }catch(error) {
+            console.log(error)
           }
         }
 
@@ -189,15 +193,7 @@ test('find a talons', async ({ page }) => {
   
       }
 
-      // check false-positives days for practice
-      if(dateObject.markers.length < 60 && issueName !== 'theory_exam') {
-        resultsObject.data.push(dateObject);
-      }
-
-      // check false-positives days for theory
-      if(dateObject.markers.length < 95 && issueName === 'theory_exam') {
-        resultsObject.data.push(dateObject);
-      }
+      resultsObject.data.push(dateObject);
     }
   }
 
