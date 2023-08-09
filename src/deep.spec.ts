@@ -44,6 +44,7 @@ type OfficesMap = {
   id_offices?: string;
 }
 
+//TODO: split practice by 2 runners
 
 test('find a talons', async ({ page }) => {
   const issuesToParse = JSON.parse(process.env.ISSUES || "[]");
@@ -110,7 +111,7 @@ test('find a talons', async ({ page }) => {
       await page.goto(`https://eq.hsc.gov.ua/site/step2?chdate=${date?.dateValue}&question_id=${issueType}&id_es=`);
       
       // TODO: wait not for timeout, but wait for markers in a map
-      await page.waitForTimeout(100);
+      // await page.waitForTimeout(50);
 
       const markers = await page.evaluate('window?.markers');
 
@@ -165,7 +166,7 @@ test('find a talons', async ({ page }) => {
   
             const response = await page.evaluate(js);
   
-            await page.waitForTimeout(50);
+            // await page.waitForTimeout(50);
   
             // await page.waitForTimeout(100);
             const talons = JSON.parse(response as string)?.rows || [];
@@ -208,25 +209,25 @@ test('find a talons', async ({ page }) => {
 
     console.log({resultsObject});
     
-  if(results && results.length > 0) {
-    const bot = new Telegraf(process.env.TELEGRAM_TOKEN as string);
+  // if(results && results.length > 0) {
+  //   const bot = new Telegraf(process.env.TELEGRAM_TOKEN as string);
 
-    await bot.telegram.sendMessage(process.env.TELEGRAM_TO as string, results.join(''))
-  }
+  //   await bot.telegram.sendMessage(process.env.TELEGRAM_TO as string, results.join(''))
+  // }
 
-  if(resultsObject) {
-    const response = await axios({
-      method: 'post',
-      url: `${process.env.WEBHOOK_URL}`,
-      data: {
-        data: resultsObject.data,
-        offices: Array.from(resultsObject.offices, ([_name, value]) => value),
-        issues: issuesToParse,
-      }
-    });
+  // if(resultsObject) {
+  //   const response = await axios({
+  //     method: 'post',
+  //     url: `${process.env.WEBHOOK_URL}`,
+  //     data: {
+  //       data: resultsObject.data,
+  //       offices: Array.from(resultsObject.offices, ([_name, value]) => value),
+  //       issues: issuesToParse,
+  //     }
+  //   });
 
-    console.log(response.data)
-  }
+  //   console.log(response.data)
+  // }
 
   console.log('\n')
 

@@ -112,7 +112,7 @@ test('find a talons', async ({ page }) => {
       await page.goto(`https://eq.hsc.gov.ua/site/step2?chdate=${date?.dateValue}&question_id=${issueType}&id_es=`);
       
       // TODO: wait not for timeout, but wait for markers in a map
-      await page.waitForTimeout(200);
+      // await page.waitForTimeout(200);
       // @ts-ignore
       const markers = await page.evaluate(() => window?.markers);
       console.log('\n')
