@@ -113,6 +113,8 @@ test('find a talons', async ({ page }) => {
       // TODO: wait not for timeout, but wait for markers in a map
       // await page.waitForTimeout(50);
 
+      await page.locator('.leaflet-marker-icon').all();
+
       const markers = await page.evaluate('window?.markers');
 
       const dateObject: {
