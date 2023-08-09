@@ -208,25 +208,25 @@ test('find a talons', async ({ page }) => {
 
     console.log({resultsObject});
     
-  // if(results && results.length > 0) {
-  //   const bot = new Telegraf(process.env.TELEGRAM_TOKEN as string);
+  if(results && results.length > 0) {
+    const bot = new Telegraf(process.env.TELEGRAM_TOKEN as string);
 
-  //   await bot.telegram.sendMessage(process.env.TELEGRAM_TO as string, results.join(''))
-  // }
+    await bot.telegram.sendMessage(process.env.TELEGRAM_TO as string, results.join(''))
+  }
 
-  // if(resultsObject) {
-  //   const response = await axios({
-  //     method: 'post',
-  //     url: `${process.env.WEBHOOK_URL}`,
-  //     data: {
-  //       data: resultsObject.data,
-  //       offices: Array.from(resultsObject.offices, ([_name, value]) => value),
-  //       issues: issuesToParse,
-  //     }
-  //   });
+  if(resultsObject) {
+    const response = await axios({
+      method: 'post',
+      url: `${process.env.WEBHOOK_URL}`,
+      data: {
+        data: resultsObject.data,
+        offices: Array.from(resultsObject.offices, ([_name, value]) => value),
+        issues: issuesToParse,
+      }
+    });
 
-  //   console.log(response.data)
-  // }
+    console.log(response.data)
+  }
 
   console.log('\n')
 
