@@ -168,9 +168,6 @@ test('find a talons', async ({ page }) => {
   
             const response = await page.evaluate(js);
   
-            // await page.waitForTimeout(50);
-  
-            // await page.waitForTimeout(100);
             const talons = JSON.parse(response as string)?.rows || [];
   
             if(marker && talons.length > 0) {
@@ -188,7 +185,7 @@ test('find a talons', async ({ page }) => {
               console.log(`🚗 🚗ТСЦ #: ${offices_n} Талончиків: ${marker?.cnt || 'X'} Питання: ${issueName}  🚗 🚗 🚗\n`)
             }
           }catch(error) {
-            console.log(error)
+            console.log(error);
           }
         }
 
