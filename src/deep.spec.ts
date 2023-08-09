@@ -115,7 +115,7 @@ test('find a talons', async ({ page }) => {
 
       await page.locator('.leaflet-marker-icon').all();
 
-      const markers = await page.evaluate('window?.markers');
+      const markers = (await page.evaluate('window?.markers')) || [];
 
       const dateObject: {
         date: string;
@@ -127,7 +127,6 @@ test('find a talons', async ({ page }) => {
         markers: [],
       };
     
-      if(markers && markers?.length){
         for (const marker of markers) {
           const {
             lang,
@@ -150,7 +149,7 @@ test('find a talons', async ({ page }) => {
 
           try {
             const js = `
-            new Promise((res, rej) => $.ajax({
+            new Promise((res) => $.ajax({
               type: 'POST',
               url: '/site/freetimes',
               data: 
@@ -161,16 +160,18 @@ test('find a talons', async ({ page }) => {
                 es_date: undefined,
                 es_time: undefined,
               },
-            })
-            .then(data => res(data))
+            }).then(data => res(data))
             );
             `;
   
-            const response = await page.evaluate(js);
+            const response = await Promise.race([ 
+              page.evaluate(js),
+               new Promise(res => setTimeout(() => res("[]"), 2000)),
+              ]) ;
   
             const talons = JSON.parse(response as string)?.rows || [];
   
-            if(marker && talons.length > 0) {
+            if(talons.length > 0) {
               dateObject.markers.push({
                 offices_n,
                 talons: talons.length || true,
@@ -190,8 +191,6 @@ test('find a talons', async ({ page }) => {
         }
 
         results.push(`\nД:${date?.text.toString().toUpperCase().replace(/\n/g, '')} П:${issueName} К-ть:${dateObject.markers.length}\n`)
-  
-      }
 
       resultsObject.data.push(dateObject);
     }
