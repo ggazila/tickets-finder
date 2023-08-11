@@ -134,6 +134,7 @@ test('find a talons', async ({ page }) => {
             offices_addr,
             offices_name,
             id_offices,
+            sts,
           } = marker;
             
           const offices_n = offices_name.match(/\d{4}/)?.[0];
@@ -166,7 +167,7 @@ test('find a talons', async ({ page }) => {
   
             const response = await Promise.race([ 
               page.evaluate(js),
-               new Promise(res => setTimeout(() => res('{"rows": []}'), 2000)),
+               new Promise(res => setTimeout(() => res('{"rows": []}'), 1500)),
               ])
   
             const talons = JSON.parse(response as string)?.rows || [];
