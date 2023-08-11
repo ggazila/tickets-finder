@@ -2,9 +2,9 @@ name: Find Practice Talonchyk
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/23 16-18 * * *"
-    - cron: "*/19 11-16 * * *"
-    - cron: "*/11 4-11 * * *"
+    - cron: "*/15 16-18 * * *"
+    - cron: "*/12 11-16 * * *"
+    - cron: "*/7 4-11 * * *"
 jobs:
   find:
     timeout-minutes: 16
