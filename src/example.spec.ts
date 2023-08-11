@@ -26,7 +26,7 @@ enum IssueType  {
 }
 type Marker = {
   offices_n: string;
-  talons: number;
+  talons: number | boolean;
   issueType: string;
 };
 
@@ -154,7 +154,7 @@ test('find a talons', async ({ page }) => {
           if(marker && marker?.sts && (marker?.sts === 3 || marker?.sts === 1)) {
             dateObject.markers.push({
               offices_n,
-              talons: marker?.cnt || true,
+              talons: true,
               issueType: issueName,
             });
           }
