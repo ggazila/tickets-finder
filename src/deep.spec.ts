@@ -163,13 +163,11 @@ test('find a talons', async ({ page }) => {
             }).then(data => res(data))
             );
             `;
-
-            const shouldSendRequest = marker?.sts !== 4;
   
-            const response = shouldSendRequest ? await Promise.race([ 
+            const response = await Promise.race([ 
               page.evaluate(js),
                new Promise(res => setTimeout(() => res('{"rows": []}'), 2000)),
-              ]): '{"rows": []}' ;
+              ])
   
             const talons = JSON.parse(response as string)?.rows || [];
   
