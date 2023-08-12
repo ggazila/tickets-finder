@@ -172,7 +172,7 @@ test('find a talons', async ({ page }) => {
   
             const talons = JSON.parse(response as string)?.rows || [];
   
-            if(talons.length > 0 && marker?.sts && (marker?.sts === 3 || marker?.sts === 1)) {
+            if(talons.length > 0) {
               dateObject.markers.push({
                 offices_n,
                 talons: talons.length || true,
